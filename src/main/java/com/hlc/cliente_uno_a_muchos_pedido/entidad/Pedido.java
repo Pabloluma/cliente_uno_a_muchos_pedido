@@ -1,16 +1,11 @@
 package com.hlc.cliente_uno_a_muchos_pedido.entidad;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -22,33 +17,43 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-    @Past
+	@Past
 	private LocalDateTime fecha;
-	
+
 	@NotBlank
 	@NotNull
 	private String descripcion;
-	
+
 	@NotNull
 	private Integer cantidad;
-	
+
 	@JoinColumn(name = "cliente_id", nullable = false)
 	@ManyToOne
 	private Cliente cliente;
-	
-    public Pedido() {}
 
+	@ManyToMany
+	@JoinTable(
+			name = "pedido_producto", // Nombre de la tabla intermedia
+			joinColumns = @JoinColumn(name = "pedido_id"),  // Clave foránea de Pedido
+			inverseJoinColumns = @JoinColumn(name = "producto_id") // Clave foránea de Producto
+	)
+	private List<Producto> productos;
 
 	public Pedido(Long id, @Past LocalDateTime fecha, @NotBlank @NotNull String descripcion, @NotNull Integer cantidad,
-			Cliente cliente) {
+				  Cliente cliente) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
 		this.descripcion = descripcion;
 		this.cantidad = cantidad;
 		this.cliente = cliente;
+		this.productos = productos;
+	}
+
+	public Pedido() {
+
 	}
 
 
@@ -91,8 +96,11 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
-	
-	
-	
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
 }

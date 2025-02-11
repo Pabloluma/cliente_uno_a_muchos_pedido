@@ -1,7 +1,10 @@
 package com.hlc.cliente_uno_a_muchos_pedido.controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.hlc.cliente_uno_a_muchos_pedido.entidad.Producto;
+import com.hlc.cliente_uno_a_muchos_pedido.servicio.ProductoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +27,14 @@ public class PedidoControlador {
 
     private static final String VISTA_FORMULARIO = "pedidos/formulario";
     private static final String REDIRECT_LISTADO = "redirect:/pedidos";
+    private static final String LISTA_PRODUCTOS = "pedidos/productos";
 
     @Autowired
     private PedidoServicio pedidoServicio;
     @Autowired
     private ClienteServicio clienteServicio;
+    @Autowired
+    private ProductoServicio productoServicio;
 
     @GetMapping
     public String listarPedidos(Model model) {
@@ -49,7 +55,15 @@ public class PedidoControlador {
         if (bindingResult.hasErrors()) {
             model.addAttribute("pedido", pedido);
             model.addAttribute("clientes", clienteServicio.obtenerTodosLosClientes());
+            model.addAttribute("productos", productoServicio.obtenerTodosLosProductos());
             return VISTA_FORMULARIO;
+        }
+        if (pedido.getProductos() != null) {
+            List<Producto> productosPersistidos = new ArrayList<>();
+            for (Producto p : pedido.getProductos()) {
+                productosPersistidos.add(productoServicio.obtenerProductoPorId(p.getId()));
+            }
+            pedido.setProductos(productosPersistidos);
         }
         pedidoServicio.guardarPedido(pedido);
         return REDIRECT_LISTADO;
@@ -60,6 +74,7 @@ public class PedidoControlador {
         Pedido pedido = pedidoServicio.obtenerPedidoPorId(id);
         model.addAttribute("pedido", pedido);
         model.addAttribute("clientes", clienteServicio.obtenerTodosLosClientes());
+        model.addAttribute("productos", productoServicio.obtenerTodosLosProductos());
         return VISTA_FORMULARIO;
     }
 
@@ -67,6 +82,14 @@ public class PedidoControlador {
     public String eliminarPedido(@PathVariable Long id) {
         pedidoServicio.eliminarPedido(id);
         return REDIRECT_LISTADO;
+    }
+
+    @GetMapping("/{id}/productos")
+    public String mostrarProductosPedido(@PathVariable Long id, Model model) {
+        Pedido pedido = pedidoServicio.obtenerPedidoPorId(id);
+        model.addAttribute("pedido", pedido);
+        model.addAttribute("productos", pedido.getProductos());
+        return LISTA_PRODUCTOS;
     }
 }
 

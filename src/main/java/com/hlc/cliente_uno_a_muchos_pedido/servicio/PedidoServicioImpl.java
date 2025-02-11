@@ -2,6 +2,7 @@ package com.hlc.cliente_uno_a_muchos_pedido.servicio;
 
 import java.util.List;
 
+import com.hlc.cliente_uno_a_muchos_pedido.entidad.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,11 @@ public class PedidoServicioImpl implements PedidoServicio {
     @Override
     public List<Pedido> obtenerPedidosPorCliente(Cliente cliente) {
         return pedidoRepository.findByCliente(cliente);
+    }
+
+    @Override
+    public List<Pedido> obtenerPedidosPorProducto(Producto producto) {
+        return pedidoRepository.findByProductos(producto);
     }
 
 

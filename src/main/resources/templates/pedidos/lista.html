@@ -27,10 +27,12 @@
                     <td>
                         <a th:href="@{/pedidos/editar/{id}(id=${pedido.id})}" class="btn btn-warning btn-sm">Editar</a>
                         <a th:href="@{/pedidos/eliminar/{id}(id=${pedido.id})}" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a th:href="@{/pedidos/{id}/productos(id=${pedido.id})}" class="btn btn-info btn-sm">Ver Productos</a>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <a th:href="@{/clientes}" class="btn btn-secondary">Volver a los Clientes</a>
 
         <div th:if="${#lists.isEmpty(pedidos)}">
             <p class="text-muted">No hay pedidos registrados.</p>

@@ -35,6 +35,15 @@
                     <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="productos" class="form-label">Productos</label>
+                <select class="form-control" id="productos" th:field="*{productos}" multiple>
+                    <option th:each="producto : ${productos}"
+                            th:value="${producto.id}"
+                            th:text="${producto.nombre}">
+                    </option>
+                </select>
+            </div>
 
             <button type="submit" class="btn btn-primary">Guardar</button>
             <a th:href="@{/pedidos}" class="btn btn-secondary">Cancelar</a>
