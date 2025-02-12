@@ -49,7 +49,7 @@ public class Pedido {
 		this.descripcion = descripcion;
 		this.cantidad = cantidad;
 		this.cliente = cliente;
-		this.productos = productos;
+//		this.productos = productos;
 	}
 
 	public Pedido() {

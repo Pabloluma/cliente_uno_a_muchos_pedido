@@ -21,16 +21,21 @@ public class Producto {
     @ManyToMany(mappedBy = "productos") // Relación inversa
     private List<Pedido> pedidos;
 
+    @JoinColumn(name = "categoria_id", nullable = false)
+    @ManyToOne
+    private Categoria categoria;
+
     public Producto() {
     }
 
-    public Producto(Long id, String nombre, String descripcion, Float peso, Integer stock, List<Pedido> pedidos) {
+    public Producto(Long id, String nombre, String descripcion, Float peso, Integer stock, List<Pedido> pedidos, Categoria categoria) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.peso = peso;
         this.stock = stock;
         this.pedidos = pedidos;
+        this.categoria = categoria;
     }
 
     // Getters y Setters
@@ -80,5 +85,12 @@ public class Producto {
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
