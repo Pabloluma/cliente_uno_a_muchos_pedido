@@ -18,9 +18,11 @@ public class Producto {
     private Float peso;
     private Integer stock;
 
+
     @ManyToMany(mappedBy = "productos") // Relación inversa
     private List<Pedido> pedidos;
 
+    // lado *
     @JoinColumn(name = "categoria_id", nullable = false)
     @ManyToOne
     private Categoria categoria;
