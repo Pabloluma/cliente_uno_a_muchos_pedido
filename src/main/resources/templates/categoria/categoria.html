@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>INFORMACIÓN AVANZADA DE LA CATEGORÍA</h1><br>
+<p><b>Nombre: </b><span th:text="${categoria.nombre}"></span></p>
+<p><b>Descripción: </b><span th:text="${categoria.descripcion}"></span></p>
+<a th:href="@{/pedidos/{id}/productos(id=${pedidoId})}"
+   class="btn btn-secondary">
+    Volver a los Productos del Pedido
+</a>
+</body>
+</html>

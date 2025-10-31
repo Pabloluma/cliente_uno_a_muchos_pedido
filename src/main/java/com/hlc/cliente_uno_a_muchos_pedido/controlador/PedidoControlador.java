@@ -27,7 +27,8 @@ public class PedidoControlador {
 
     private static final String VISTA_FORMULARIO = "pedidos/formulario";
     private static final String REDIRECT_LISTADO = "redirect:/pedidos";
-    private static final String LISTA_PRODUCTOS = "pedidos/productos";
+    private static final String LISTA_PRODUCTOS = "productos/productos";
+
 
     @Autowired
     private PedidoServicio pedidoServicio;
@@ -47,6 +48,7 @@ public class PedidoControlador {
     public String mostrarFormularioNuevoPedido(Model model) {
         model.addAttribute("pedido", new Pedido());
         model.addAttribute("clientes", clienteServicio.obtenerTodosLosClientes());
+        model.addAttribute("productos", productoServicio.obtenerTodosLosProductos());
         return VISTA_FORMULARIO;
     }
 
