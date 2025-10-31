@@ -22,13 +22,9 @@ import java.util.List;
 public class ProductoControlador {
     private static final String LISTA_CATEGORIA = "categoria/categoria";
 
-
-    @Autowired
-    private CategoriaServicio categoriaServicio;
     @Autowired
     private ProductoServicio productoServicio;
-    @Autowired
-    private PedidoServicio pedidoServicio;
+
 
 
     @PostMapping("/{id}/categorias")
